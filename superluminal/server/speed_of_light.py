@@ -1,0 +1,1 @@
+SPEED_OF_LIGHT = c = 299792458.0  # m/s
