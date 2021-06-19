@@ -1,6 +1,10 @@
+from __future__ import annotations
 from time import time
 
-from Body import Body
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from Body import Body
+
 from gravitational_constant import GRAVITATIONAL_CONSTANT
 
 class Engine(object):
@@ -10,20 +14,12 @@ class Engine(object):
         self.frame_rate = 24.0
         self._last_tick_time = time()
     
-    def get_new_body(self) -> Body:
-        for body in self.bodies:
-            if not body.in_use:
-                body.in_use = True
-                self._unused_bodies -= 1
-                return body
-        body = Body()
+    def add_body(self, body: Body):
         self.bodies.append(body)
-        return body
     
-    def destroy_body(self, body):
+    def destroy_body(self, body: Body):
         body.in_use = False
-        self._unused_bodies += 1
-        # TODO Consider garbage collection if there are too many unused bodies
+        self.bodies.remove(body)
     
     def tick(self):
         if time() - self._last_tick_time < 1.0 / self.frame_rate:
