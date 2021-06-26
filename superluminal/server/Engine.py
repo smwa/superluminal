@@ -27,7 +27,7 @@ class Engine(object):
         seconds_passed = time() - self._last_tick_time
         self._last_tick_time = time()
 
-        bodies = filter(lambda body: body.in_use, self.bodies)
+        bodies = list(filter(lambda body: body.in_use, self.bodies))
 
         # Apply velocity
         for body in bodies:
