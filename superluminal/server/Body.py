@@ -1,11 +1,12 @@
 from __future__ import annotations
+import json
 
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
-    from Engine import Engine
+    from .Engine import Engine
 
-from Vector3 import Vector3
-from Vector4 import Vector4
+from .Vector3 import Vector3
+from .Vector4 import Vector4
 
 class Body(object):
     def __init__(self):
@@ -24,4 +25,7 @@ class Body(object):
         pass
 
     def __repr__(self) -> str:
-        return "In Use: {}\nMass: {}\nRadius: {}\nPosition: {}\nVelocity: {}\nRotation: {}".format(self.in_use, self.mass, self.radius, self.position, self.velocity, self.rotation)
+        return json.dumps(self.__json__(), indent=2)
+
+    def __json__(self):
+        return {'in_use': self.in_use, 'mass': self.mass, 'radius': self.radius, 'position': self.position.__json__(), 'velocity': self.velocity.__json__(), 'rotation': self.rotation.__json__()}

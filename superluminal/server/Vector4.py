@@ -1,3 +1,5 @@
+import json
+
 class Vector4(object):
     def __init__(self):
         self.x = 0.0
@@ -6,4 +8,7 @@ class Vector4(object):
         self.w = 0.0
 
     def __repr__(self) -> str:
-        return "({}, {}, {}, {})".format(self.x, self.y, self.z, self.w)
+        return json.dumps(self.__json__())
+
+    def __json__(self):
+        return {'x': self.x, 'y': self.y, 'z': self.z, 'w': self.w}

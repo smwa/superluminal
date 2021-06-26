@@ -1,6 +1,6 @@
-from Body import Body
-from Vector3 import Vector3
-from speed_of_light import SPEED_OF_LIGHT
+from .Body import Body
+from .Vector3 import Vector3
+from .speed_of_light import SPEED_OF_LIGHT
 
 class Photon(Body):
     def __init__(self, initial_direction: Vector3, frequency_in_hertz: float):

@@ -1,4 +1,5 @@
-from math import sqrt, pow
+from math import sqrt
+import json
 
 class Vector3(object):
     def __init__(self):
@@ -43,4 +44,7 @@ class Vector3(object):
         raise NotImplementedError()
 
     def __repr__(self) -> str:
-        return "({}, {}, {})".format(self.x, self.y, self.z)
+        return json.dumps(self.__json__())
+
+    def __json__(self):
+        return {'x': self.x, 'y': self.y, 'z': self.z}

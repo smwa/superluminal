@@ -1,16 +1,16 @@
 from __future__ import annotations
 from time import time
+import json
 
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
-    from Body import Body
+    from .Body import Body
 
-from gravitational_constant import GRAVITATIONAL_CONSTANT
+from .gravitational_constant import GRAVITATIONAL_CONSTANT
 
 class Engine(object):
     def __init__(self):
         self.bodies = []
-        self._unused_bodies = 0
         self.frame_rate = 24.0
         self._last_tick_time = time()
     
@@ -52,3 +52,10 @@ class Engine(object):
 
                 # Let bodies run any object specific code, like launching missiles or applying engine force
                 affected_body.on_tick(self, seconds_passed)
+
+    def __repr__(self) -> str:
+        return json.dumps(self.__json__(), indent=2)
+
+    def __json__(self):
+        jsons = list(map(lambda body: body.__json__(), self.bodies))
+        return {'bodies': jsons}
