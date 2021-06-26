@@ -32,7 +32,7 @@ def start_engine(engine_pipe):
     # TODO end rm
 
     while True:
-        if engine_pipe.poll(0.001):
+        if engine_pipe.poll():
             request = engine_pipe.recv()
             request_type = request[0]
             if request_type == Request_Type.GET:
