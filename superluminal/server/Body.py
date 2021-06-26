@@ -25,7 +25,7 @@ class Body(object):
         pass
 
     def __repr__(self) -> str:
-        return json.dumps(self.__json__(), indent=2)
+        return json.dumps(self.__json__())
 
     def __json__(self):
         return {'in_use': self.in_use, 'mass': self.mass, 'radius': self.radius, 'position': self.position.__json__(), 'velocity': self.velocity.__json__(), 'rotation': self.rotation.__json__()}

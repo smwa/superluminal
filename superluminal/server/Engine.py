@@ -5,14 +5,19 @@ import json
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from .Body import Body
+    from .Player import Player
 
 from .gravitational_constant import GRAVITATIONAL_CONSTANT
 
 class Engine(object):
     def __init__(self):
+        self.players = []
         self.bodies = []
         self.frame_rate = 24.0
         self._last_tick_time = time()
+    
+    def add_player(self, player: Player):
+        self.players.append(player)
     
     def add_body(self, body: Body):
         self.bodies.append(body)
@@ -29,6 +34,7 @@ class Engine(object):
 
         bodies = list(filter(lambda body: body.in_use, self.bodies))
 
+        # TODO Handle photon collisions. It's too fast
         # Apply velocity
         for body in bodies:
             body.position += body.velocity * seconds_passed
@@ -54,8 +60,9 @@ class Engine(object):
                 affected_body.on_tick(self, seconds_passed)
 
     def __repr__(self) -> str:
-        return json.dumps(self.__json__(), indent=2)
+        return json.dumps(self.__json__())
 
     def __json__(self):
-        jsons = list(map(lambda body: body.__json__(), self.bodies))
-        return {'bodies': jsons}
+        bodies_jsons = list(map(lambda body: body.__json__(), self.bodies))
+        players_jsons = list(map(lambda player: player.__json__(), self.players))
+        return {'bodies': bodies_jsons, 'players': players_jsons}
